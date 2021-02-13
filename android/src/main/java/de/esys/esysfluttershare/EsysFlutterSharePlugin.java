@@ -81,7 +81,7 @@ public class EsysFlutterSharePlugin implements MethodCallHandler {
         String fileProviderAuthority = activeContext.getPackageName() + PROVIDER_AUTH_EXT;
         Uri contentUri = FileProvider.getUriForFile(activeContext, fileProviderAuthority, file);
 
-        activeContext.grantUriPermission(activeContext.getPackageName(), contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        activeContext.grantUriPermission(fileProviderAuthority, contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
         // add optional text
@@ -110,7 +110,7 @@ public class EsysFlutterSharePlugin implements MethodCallHandler {
             File file = new File(activeContext.getCacheDir(), name);
             String fileProviderAuthority = activeContext.getPackageName() + PROVIDER_AUTH_EXT;
             Uri uriForFile = FileProvider.getUriForFile(activeContext, fileProviderAuthority, file);
-            activeContext.grantUriPermission(activeContext.getPackageName(), uriForFile, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            activeContext.grantUriPermission(fileProviderAuthority, uriForFile, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             contentUris.add(uriForFile);
         }
