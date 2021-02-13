@@ -80,6 +80,9 @@ public class EsysFlutterSharePlugin implements MethodCallHandler {
         File file = new File(activeContext.getCacheDir(), name);
         String fileProviderAuthority = activeContext.getPackageName() + PROVIDER_AUTH_EXT;
         Uri contentUri = FileProvider.getUriForFile(activeContext, fileProviderAuthority, file);
+
+        activeContext.grantUriPermission(activeContext.getPackageName(), contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
         // add optional text
         if (!text.isEmpty()) shareIntent.putExtra(Intent.EXTRA_TEXT, text);
@@ -106,7 +109,10 @@ public class EsysFlutterSharePlugin implements MethodCallHandler {
         for (String name : names) {
             File file = new File(activeContext.getCacheDir(), name);
             String fileProviderAuthority = activeContext.getPackageName() + PROVIDER_AUTH_EXT;
-            contentUris.add(FileProvider.getUriForFile(activeContext, fileProviderAuthority, file));
+            Uri uriForFile = FileProvider.getUriForFile(activeContext, fileProviderAuthority, file);
+            activeContext.grantUriPermission(activeContext.getPackageName(), uriForFile, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            contentUris.add(uriForFile);
         }
 
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, contentUris);
